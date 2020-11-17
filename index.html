@@ -1,11 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./styles.css" />
 	<title>VuejsProject</title>
 </head>
-<body>
 
+<body>
+	<div id="app" class="app">
+		<h1>{{ restaurantName }}</h1>
+		<p class="description">
+			Bienvenue dans notre café {{ restaurantName }}! Nous sommes réputés pour
+			notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+			matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+			est difficile de s'arrêter.
+		</p>
+		<section class="menu">
+			<h2>Menu</h2>
+			<div class="menu-item" v-for="menu in simpleMenu">
+				<img class="menu-item__image" :src="menu.image.source" :src="menu.image.alt" alt="" />
+
+				<div>
+					<h3>{{menu.name}}</h3>
+					<p v-if="menu.inStock">En stock</p>
+					<p>{{menu.quantity}}</p>
+					<div>
+						<label for="add-item-quantity">Quantité :</label>
+						<input id="add-item-quantity" type="number" />
+						<button>Ajouter au panier d'achat</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<h2>Contactez nous</h2>
+		<p>Adresse : {{address}}</p>
+		<p>Téléphone : {{phoneNumber}}</p>
+		<p>Email : {{email}}</p>
+		<p>Horaires :</p>
+		<ul>
+			<li>L-V: 06:00 à 16:00</li>
+			<li>Samedi: 07:00 à 14:00</li>
+			<li>Dimanche: 07:00 à 12:00</li>
+		</ul>
+
+		<!--	<form>
+			<label for="username">username</label>
+			<input type="text" id="username" v-model="username">
+			<label for="password">password</label>
+			<input type="password" v-model="password">
+		</form> -->
+
+		<footer class="footer">
+			<p>Copyright {{ footer }} 2019</p>
+		</footer>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		const app = new Vue({
+			el: '#app',
+			data: {
+				phoneNumber: '01 88 88 88 88',
+				address: '18 avenue du Beurre, Paris, France',
+				email: 'hello@cafewithavue.bakery',
+				username: '',
+				password: '',
+				restaurantName: "La belle vue",
+				simpleMenu: [
+					{
+						name: "Croissant",
+						image: {
+							source: "./images/croissant.jpg",
+							alt: "Un croissant"
+						},
+						inStock: true,
+						quantity: 1
+					},
+					{
+						name: "Baguette de pain",
+						image: {
+							source: "./images/french-baguette.jpeg",
+							alt: "Quatre baguettes de pain"
+						},
+						inStock: true,
+						quantity: 1
+					},
+					{
+						name: "Éclair",
+						image: {
+							source: "./images/eclair.jpg",
+							alt: "Éclair au chocolat"
+						},
+						inStock: false,
+						quantity: 1
+					}
+				]
+			},
+			computed: {
+				footer() {
+					return this.restaurantName
+				}
+			}
+		})
+	</script>
 </body>
+
 </html>
