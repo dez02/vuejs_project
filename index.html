@@ -20,21 +20,23 @@
 		<section class="menu">
 			<h2>Menu</h2>
 			<div class="menu-item" v-for="menu in simpleMenu">
-				<img class="menu-item__image" :src="menu.image.source" :src="menu.image.alt" alt="" />
+				<img class="menu-item__image" :src="menu.image.source" :src="menu.image.alt" />
 
 				<div>
 					<h3>{{menu.name}}</h3>
 					<p v-if="menu.inStock">En stock</p>
 					<p>{{menu.quantity}}</p>
 					<div>
-						<label for="add-item-quantity">Quantité :</label>
-						<input id="add-item-quantity" type="number" />
-						<button>Ajouter au panier d'achat</button>
+						<label for="add-item-quantity">Quantité: {{menu.quantity}}</label>
+						<input id="add-item-quantity" type="number" v-model="menu.quantity"/>
+						<button @click="addToShoppingCart(menu.quantity)">Ajouter au panier d'achat</button>
 					</div>
 				</div>
 			</div>
 		</section>
-
+		<aside class="shopping-cart">
+			<h2>Panier d'achat : {{ shoppingCart }} articles</h2>
+		</aside>
 
 		<h2>Contactez nous</h2>
 		<p>Adresse : {{address}}</p>
@@ -46,13 +48,6 @@
 			<li>Samedi: 07:00 à 14:00</li>
 			<li>Dimanche: 07:00 à 12:00</li>
 		</ul>
-
-		<!--	<form>
-			<label for="username">username</label>
-			<input type="text" id="username" v-model="username">
-			<label for="password">password</label>
-			<input type="password" v-model="password">
-		</form> -->
 
 		<footer class="footer">
 			<p>Copyright {{ footer }} 2019</p>
@@ -68,8 +63,7 @@
 				phoneNumber: '01 88 88 88 88',
 				address: '18 avenue du Beurre, Paris, France',
 				email: 'hello@cafewithavue.bakery',
-				username: '',
-				password: '',
+				shoppingCart: 0,
 				restaurantName: "La belle vue",
 				simpleMenu: [
 					{
@@ -104,6 +98,11 @@
 			computed: {
 				footer() {
 					return this.restaurantName
+				}
+			},
+			methods: {
+				addToShoppingCart(amount) {
+					this.shoppingCart += amount
 				}
 			}
 		})
